@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::title}, ~{::section})}"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>article list</title>
+</head>
+<body>
+    <section>
+        <p th:class="blog-post-meta" th:text="|total : ${total} |"></p>
+        <table class="table">
+            <colgroup></colgroup>
+            <thead>
+                <tr>
+                    <th>index</th>
+                    <th>title</th>
+                    <th>writer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:if="${total > 0}">
+                    <tr th:each="row : ${list}">
+                        <td th:text="${row.sequence}">index</td>
+                        <td ><a th:href="|#link|" th:text="${row.title}" th:onclick="|location.href='@{/article/{sequence}(sequence=${row.sequence})}'|">title</a></td>
+                        <td th:text="${row.writer}">writer</td>
+                    </tr>
+                </th:block>
+                <th:block th:unless="${total > 0}">
+                    <tr>
+                        <td th:class="|text-center|" th:colspan="3">등록된 게시글이 없습니다.</td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+        <form id="searchForm">
+            <input type="hidden" name="pageNumber" id="pageNumber"/>
+            <th:block th:if="${total > 0}">
+                <p th:class="|text-center|" th:data-size="${size}">
+                    <th:block th:each="row : ${#numbers.sequence(1,size)}">
+                        <button type="button" class="btn btn-outline-secondary me-2" th:text="${rowStat.count}" th:onclick="|javascript:goPage(${row})|"></button>
+                    </th:block>
+                </p>
+            </th:block>
+            <th:block th:unless="${total > 0}">
+                <p th:class="|text-center|">
+                    <button type="button" class="btn btn-outline-secondary me-2" th:text="1" th:onclick="|javascript:goPage(1)|"></button>
+                </p>
+            </th:block>
+            <p sec:authorize="isAuthenticated()" th:class="text-end">
+                <button class="btn btn-outline-secondary me-2 strong" type="button" th:onclick="|location.href='@{/article/write}'|">write</button>
+            </p>
+            <p th:class="|text-center|">
+                <select name="searchOption" th:class>
+                    <option th:class value="title" th:selected="${#request.getParameter('searchOption') eq'title'}">제목</option>
+                    <option th:class value="contents" th:selected="${#request.getParameter('searchOption') eq 'contents'}">내용</option>
+                </select>
+                <input type="text" name="searchValue" th:value="${param.searchValue}">
+                <button class="btn btn-outline-secondary me-2" type="button" th:onclick="|javascript:goPage(1);|">검색</button>
+            </p>
+        </form>
+
+        <script>
+            function goPage(val) {
+                var fm = document.getElementById('searchForm');
+                document.getElementById('pageNumber').value = val;
+                fm.submit();
+            }
+        </script>
+    </section>
+</body>
+</html>

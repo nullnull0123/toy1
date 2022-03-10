@@ -1,0 +1,12 @@
+server:
+    port: 8080
+
+logging:
+    level:
+        root: info
+
+spring:
+    profiles:
+        active: test-group
+        group:
+            test-group: test, test-db

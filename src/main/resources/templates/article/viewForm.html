@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>article view</title>
+</head>
+<body>
+<section>
+    <form id="fm" th:action th:method="post" action="" method="post">
+        <input type="hidden" name="_method" id="_method">
+        <article class="blog-post">
+            <h2 th:text="${article.title}">title sample</h2>
+            <p class="blog-post-meta">
+                <span th:text="${article.createdDate}">January 1, 2021</span>
+                <span> by</span>
+                <a href="#nonLink" th:text="${article.writer}">Writer</a>
+            </p>
+            <hr>
+            <p th:text="${article.contents}">
+                This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.
+            </p>
+            <p class="text-end">
+                <th:block sec:authorize="isAuthenticated()">
+                    <button type="button" th:class="|btn btn-outline-secondary me-2|" th:onclick="|location.href='@{/article/{sequence}/edit(sequence=${sequence})}'|">edit</button>
+                    <button type="button" th:class="|btn btn-outline-secondary me-2|" th:onclick="|javscript:doDelete(${sequence});|">delete</button>
+                </th:block>
+                <button type="button" th:class="|btn btn-outline-secondary me-2|" th:onclick="|location.href='@{/article}'|">list</button>
+            </p>
+        </article>
+    </form>
+    <script>
+        function doDelete(val){
+            var _form = document.getElementById("fm");
+            var _method = document.getElementById("_method");
+            if(confirm("삭제하시겠습니까?")){
+                _method.value = "delete"
+                _form.action = "/article/"+val+"/delete";
+                _form.submit();
+            }
+        }
+    </script>
+</section>
+</body>
+</html>

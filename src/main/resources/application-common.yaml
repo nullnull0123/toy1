@@ -1,0 +1,21 @@
+server:
+  port: 8080
+spring:
+  web:
+    resources:
+      add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+    hiddenmethod:
+      filter:
+        enabled: true
+    static-path-pattern: "/resources/**"
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+
+logging:
+  level:
+    root: info

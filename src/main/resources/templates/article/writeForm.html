@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>article write</title>
+</head>
+<body>
+<section>
+    <form id="fm" th:action th:method="post" action="" method="post">
+        <input type="hidden" name="writer" th:value="${writer}">
+        <article class="blog-post">
+            <h2 th:class="|row-cols-1|">
+                <input name="title" type="text" placeholder="title">
+            </h2>
+            <hr>
+            <p th:class="|row-cols-1|">
+                <textarea name="contents" placeholder="contents"></textarea>
+            </p>
+            <p class="text-end">
+                <button type="submit" th:class="|btn btn-outline-secondary me-2|">write</button>
+                <button type="button" th:class="|btn btn-outline-secondary me-2|" th:onclick="|javascript:history.back();|">cancel</button>
+            </p>
+        </article>
+    </form>
+</section>
+</body>
+</html>

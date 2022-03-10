@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    hikari:
+      jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL
+      username: sa
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true

@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: local-group
+    group:
+      local-group: local, local-db, common
+      real-group: real, real-db, common

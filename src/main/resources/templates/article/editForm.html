@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>article edit</title>
+</head>
+<body>
+<section>
+    <form id="fm" th:action th:method="post" action="" method="post">
+        <input type="hidden" name="_method" id="_method" th:value="put">
+        <article class="blog-post">
+            <h2 th:class="|row-cols-1|">
+                <input name="title" th:value="${article.title}" type="text">
+            </h2>
+            <p class="blog-post-meta">January 1, 2021 by <a href="#">Writer</a></p>
+            <hr>
+            <p th:class="|row-cols-1|">
+                <textarea name="contents" th:text="${article.contents}">
+                    This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.
+                </textarea>
+            </p>
+            <p class="text-end">
+                <button type="button" th:class="|btn btn-outline-secondary me-2|" th:onclick="|javscript:doEdit(${sequence});|">edit</button>
+                <button type="button" th:class="|btn btn-outline-secondary me-2|" th:onclick="|javascript:history.back();|">cancel</button>
+            </p>
+        </article>
+    </form>
+    <script>
+        function doEdit(val){
+            var _form = document.getElementById("fm");
+            var _method = document.getElementById("_method");
+            if(confirm("수정하시겠습니까?")){
+                _method.value = "put"
+                _form.action = "/article/"+val+"/edit";
+                _form.submit();
+            }
+        }
+    </script>
+</section>
+</body>
+</html>
