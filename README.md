@@ -33,4 +33,4 @@
 4. 글 목록은 가장 최근 글부터 10개 단위로 페이징
 
 ## 프로젝트 과정 기록
-https://nullnulltime.tistory.com/69
+https://nullnulltime.tistory.com/66
